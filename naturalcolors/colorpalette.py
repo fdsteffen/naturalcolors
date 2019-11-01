@@ -13,7 +13,6 @@ https://matplotlib.org/3.1.0/tutorials/colors/colormap-manipulation.html
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import pandas as pd
 import seaborn as sns
 import json
 import os
@@ -44,24 +43,28 @@ def set_ticksStyle(x_size=4, y_size=4, x_dir='in', y_dir='in'):
     sns.set_style('ticks', {'xtick.major.size': x_size, 'ytick.major.size': y_size, 'xtick.direction': x_dir, 'ytick.direction': y_dir})
 
 
-def _load_colors(filename='naturalcolors.json'):
+def load_colors(filename):
     """
-    Load the colors from a json file 
+    Load rgba colors from a json file 
 
     Parameters
     ----------
     filename : str
     """
-    with open(os.path.join(package_directory, filename)) as f:
+    with open(os.path.join(package_directory, '../colormaps/', filename)) as f:
         colors_rgb = np.array(json.load(f))
-        return np.hstack((colors_rgb / 255, np.ones((24, 1))))
+        if colors_rgb.shape[1] == 3:
+            colors_rgba = np.hstack((colors_rgb / 255, np.ones((colors_rgb.shape[0], 1))))
+        else:
+            colors_rgba = colors_rgb
+        return colors_rgba
 
 
 def naturalcolors():
     """
     Wrapper for naturalcolors which builds the colormap from a loaded json file
     """
-    colors = _load_naturalcolors()
+    colors = load_colors('naturalcolors.json')
     return make_colormap(colors, 'naturalcolors')
 
 

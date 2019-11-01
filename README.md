@@ -1,9 +1,9 @@
 # <img src="naturalcolors/icon.png" width="50">naturalcolors
 
-**naturalcolors** is a colormap that is generated from the color palette and is used by the Nature journal. The colormap is itself based on the Ostwald color system.
+**naturalcolors** generates custom colormaps from a list of RGB(A) colors. The package also features an example colormap whose color palette is used by the *Nature* journal and is based on the Ostwald color system.
 
 ## Getting started
-For a quick introduction into the colormap and a guide to create a new colormap please visit the [tutorial](naturalcolors_tutorial.ipynb)
+A guide to create your own colormap can be found in [this](tutorial/naturalcolors_tutorial.ipynb) Jupyter Notebook.
 
 ## Dependencies
 naturalcolors depends on the following Python packages:
