@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import json
 import os
+import collections
 
 # seaborn settings
 sns.set_style('white')
@@ -60,6 +61,15 @@ def load_colors(filename):
         return colors_rgba
 
 
+def scramble_pop(d):
+    try:
+        while(True):
+            yield d.popleft()
+            yield d.pop()
+    except IndexError:
+        pass
+
+
 def naturalcolors():
     """
     Wrapper for naturalcolors which builds the colormap from a loaded json file
@@ -99,7 +109,7 @@ def _listed2linearSegmentedColormap(listedCmap, name='newcolormap'):
     return mpl.colors.LinearSegmentedColormap(name=name, segmentdata=cdict, N=256)
 
 
-def get_colors(cmap, n):
+def get_colors(cmap, n, scramble=False):
     """
     Extract n colors from a colormap
 
@@ -118,7 +128,10 @@ def get_colors(cmap, n):
     if n > cmap.N:
         print('The colormap \"{}\"" is built from {:d} colors. Those are listed below'.format(cmap.name, cmap.N))
         n = cmap.N
-    return cmap(np.linspace(0, 1, n))
+    colors = cmap(np.linspace(0, 1, n))
+    if scramble:
+        colors = np.array(list(scramble_pop(collections.deque(colors))))
+    return colors
 
 
 def drawColorCircle(cmap, n=24, area=200):
