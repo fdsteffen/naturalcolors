@@ -25,7 +25,6 @@ sns.set(font='Arial')
 
 package_directory = os.path.dirname(os.path.abspath(__file__))
 
-
 def set_ticksStyle(x_size=4, y_size=4, x_dir='in', y_dir='in'):
     """
     Ticks settings for plotting
@@ -44,7 +43,7 @@ def set_ticksStyle(x_size=4, y_size=4, x_dir='in', y_dir='in'):
     sns.set_style('ticks', {'xtick.major.size': x_size, 'ytick.major.size': y_size, 'xtick.direction': x_dir, 'ytick.direction': y_dir})
 
 
-def load_colors(filename):
+def load_colors(filename='colormaps.json'):
     """
     Load rgba colors from a json file 
 
@@ -52,13 +51,16 @@ def load_colors(filename):
     ----------
     filename : str
     """
-    with open(os.path.join(package_directory, '../colormaps/', filename)) as f:
-        colors_rgb = np.array(json.load(f))
-        if colors_rgb.shape[1] == 3:
-            colors_rgba = np.hstack((colors_rgb / 255, np.ones((colors_rgb.shape[0], 1))))
-        else:
-            colors_rgba = colors_rgb
-        return colors_rgba
+    with open(os.path.join(package_directory, filename)) as f:
+        inputcolors = json.load(f)
+        for name,colors_rgb in inputcolors.items():
+            colors_rgb = np.array(colors_rgb)
+            if colors_rgb.shape[1] == 3:
+                colors_rgba = np.hstack((colors_rgb / 255, np.ones((colors_rgb.shape[0], 1))))
+            else:
+                colors_rgba = colors_rgb
+            inputcolors[name] = colors_rgba
+        return inputcolors
 
 
 def scramble_pop(d):
@@ -69,13 +71,25 @@ def scramble_pop(d):
     except IndexError:
         pass
 
+def get_cmap(name, colormap_filename='colormaps.json'):
+    default_inputcolors = load_colors(colormap_filename)
+    default_cmaps = {key: make_colormap(colors, key) for key,colors in default_inputcolors.items()}
+    if name is None:
+        return default_cmaps
+    else:
+        try:
+            return default_cmaps[name]
+        except KeyError:
+            return None
+            print('Colormap \"{}\" is not yet in the list of registered colormaps.'
+                  'You may add your input colors to colormaps.json'.format(name))
 
 def naturalcolors():
     """
-    Wrapper for naturalcolors which builds the colormap from a loaded json file
+    Wrapper for naturalcolors map
     """
-    colors = load_colors('naturalcolors.json')
-    return make_colormap(colors, 'naturalcolors')
+    default_cmaps = get_cmap()
+    return default_cmaps['naturalcolors']
 
 
 def make_colormap(colors, name='newcolormap'):
