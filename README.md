@@ -3,7 +3,7 @@
 **naturalcolors** generates custom colormaps from a list of RGB(A) colors. The package also features an example colormap whose color palette is based on the Ostwald color system.
 
 ## Getting started
-A guide to create your own colormap can be found in [this](tutorial/naturalcolors_tutorial.ipynb) Jupyter Notebook.
+A guide to create your own colormap can be found in this [Jupyter Notebook](tutorial/naturalcolors_tutorial.ipynb).
 
 ## Dependencies
 naturalcolors depends on the following Python packages:
