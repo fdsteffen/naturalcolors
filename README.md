@@ -1,5 +1,5 @@
 # <img src="naturalcolors/icon.png" width="50">naturalcolors
-[![Build Status](https://github.com/fdsteffen/naturalcolors/workflows/LifeFit%20build/badge.svg)](https://github.com/fdsteffen/naturalcolors/actions)
+[![Build Status](https://github.com/fdsteffen/naturalcolors/workflows/naturalcolors%20build/badge.svg)](https://github.com/fdsteffen/naturalcolors/actions)
 
 **naturalcolors** generates custom colormaps from a list of RGB(A) colors. The package also features an example colormap whose color palette is based on the Ostwald color system.
 
