@@ -14,10 +14,10 @@ class ColorImportTest(unittest.TestCase):
         self.assertIsNone(default_cmaps)
 
     def test_getRedColor(self):
-        listedCmap, linearSegmentedCmap = ncp.get_cmap('redwhiteblue', '../tests/test_colormap.json')
-        self.assertEqual(ncp.get_colors(listedCmap, 1)[0,0], 1)
-        self.assertEqual(ncp.get_colors(listedCmap, 1)[0,1], 0)
-        self.assertEqual(ncp.get_colors(listedCmap, 1)[0,2], 0)
+        linearSegmentedCmap = ncp.get_cmap('redwhiteblue', '../tests/test_colormap.json')
+        self.assertEqual(ncp.get_colors(linearSegmentedCmap, n=1)[0,0], 1)
+        self.assertEqual(ncp.get_colors(linearSegmentedCmap, n=1)[0,1], 0)
+        self.assertEqual(ncp.get_colors(linearSegmentedCmap, n=1)[0,2], 0)
 
 if __name__ == "__main__":
     unittest.main()

@@ -72,13 +72,16 @@ def scramble_pop(d):
         pass
 
 def get_cmap(name, colormap_filename='colormaps.json'):
+    """
+    Return the selected LinearSegmentedColormap or a dictionary of all colormaps registered in colormap_filename
+    """
     default_inputcolors = load_colors(colormap_filename)
     default_cmaps = {key: make_colormap(colors, key) for key,colors in default_inputcolors.items()}
     if name is None:
         return default_cmaps
     else:
         try:
-            return default_cmaps[name]
+            return default_cmaps[name][1]
         except KeyError:
             return None
             print('Colormap \"{}\" is not yet in the list of registered colormaps.'
