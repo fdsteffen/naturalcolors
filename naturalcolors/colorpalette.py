@@ -83,9 +83,9 @@ def get_cmap(name, colormap_filename='colormaps.json'):
         try:
             return default_cmaps[name][1]
         except KeyError:
-            return None
             print('Colormap \"{}\" is not yet in the list of registered colormaps.'
                   'You may add your input colors to colormaps.json'.format(name))
+            return None
 
 def naturalcolors():
     """
