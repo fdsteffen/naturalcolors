@@ -63,7 +63,10 @@ def load_colors(filename='colormaps.json'):
         return inputcolors
 
 
-def scramble_pop(d):
+def _scramble_pop(d):
+    """
+    Reorder the colors as [first, last, second, second but last, ...]
+    """
     try:
         while(True):
             yield d.popleft()
@@ -71,9 +74,15 @@ def scramble_pop(d):
     except IndexError:
         pass
 
-def get_cmap(name, colormap_filename='colormaps.json'):
+def get_cmap(name=None, colormap_filename='colormaps.json'):
     """
     Return the selected LinearSegmentedColormap or a dictionary of all colormaps registered in colormap_filename
+
+    Parameters
+    ----------
+    name : str
+    colormap_filename : str
+                        path to a json file encoding a dictionary of colors which define custom colormaps
     """
     default_inputcolors = load_colors(colormap_filename)
     default_cmaps = {key: make_colormap(colors, key) for key,colors in default_inputcolors.items()}
@@ -147,7 +156,7 @@ def get_colors(cmap, n, scramble=False):
         n = cmap.N
     colors = cmap(np.linspace(0, 1, n))
     if scramble:
-        colors = np.array(list(scramble_pop(collections.deque(colors))))
+        colors = np.array(list(_scramble_pop(collections.deque(colors))))
     return colors
 
 
