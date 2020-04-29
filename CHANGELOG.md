@@ -12,3 +12,4 @@ All notable changes to this project are documented in this file.
 - Main module colorpalette.py
 - Tests for loading colors and building custom colormap
 - CI with [Github Actions](https://github.com/fdsteffen/naturalcolors/actions)
+
