@@ -5,4 +5,4 @@ __author__ = 'Fabio D. Steffen'
 __description__ = 'Nature color palette'
 __keywords__ = 'colormap, colors, nature'
 __url__ = 'https://github.com/fdsteffen/naturalcolors'
-__copyright__ = '2019 {}'.format(__author__)
+__copyright__ = '2020 {}'.format(__author__)
