@@ -1,5 +1,5 @@
 __title__ = 'naturalcolors'
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 __license__ = 'MIT'
 __author__ = 'Fabio D. Steffen'
 __description__ = 'Nature color palette'
