@@ -103,6 +103,12 @@ def naturalcolors():
     default_cmaps = get_cmap()
     return default_cmaps['naturalcolors']
 
+def list_cmaps():
+    """
+    List all available colormaps
+    """
+    return list(get_cmap().keys())
+
 
 def make_colormap(colors, name='newcolormap'):
     """
