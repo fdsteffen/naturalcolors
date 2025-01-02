@@ -3,6 +3,14 @@ All notable changes to this project are documented in this file.
 
 ### [Unreleased]
 
+### [1.0.4] 2025-01-02
+#### Fixed
+- Update release workflow
+
+### [1.0.3] 2025-01-02
+#### Fixed
+- Changed to `pyproject.toml` and `src` layout
+
 ### [1.0.2] 2020-04-29
 #### Added
 - colormaps.json file defining colors from which to build a custom colormap
