@@ -1,21 +1,16 @@
 #!/usr/bin/env python3
 
-"""
-Make a custom colormap from a list of colors
+"""Make a custom colormap from a list of colors
 
-References
-----------
-
-How to create a colormap: 
-
-https://matplotlib.org/3.1.0/tutorials/colors/colormap-manipulation.html
+References:
+    [1] https://matplotlib.org/3.1.0/tutorials/colors/colormap-manipulation.html
 """
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
 import json
-import os
+from typing import Union, Optional, Generator
 import collections
 from pathlib import Path
 
@@ -27,23 +22,17 @@ sns.set_style("white")
 sns.set_context("notebook")
 sns.set_theme(font="Arial")
 
-package_directory = os.path.dirname(os.path.abspath(__file__))
 
+def set_ticksStyle(
+    x_size: float = 4, y_size: float = 4, x_dir: str = "in", y_dir: str = "in"
+):
+    """Ticks settings for plotting
 
-def set_ticksStyle(x_size=4, y_size=4, x_dir="in", y_dir="in"):
-    """
-    Ticks settings for plotting
-
-    Parameters
-    ----------
-    x_size : float
-             length of x-ticks
-    y_size : float
-             length of y-ticks
-    x_dir : str, ('in' or 'out')
-            inward or outward facing x-ticks
-    y_dir : str, ('in' or 'out')
-            inward or outward facing y-ticks
+    Args:
+        x_size : length of x-ticks
+        y_size : length of y-ticks
+        x_dir : inward or outward facing x-ticks ("in" or "out")
+        y_dir : inward or outward facing y-ticks ("in" or "out")
     """
     sns.set_style(
         "ticks",
@@ -56,13 +45,11 @@ def set_ticksStyle(x_size=4, y_size=4, x_dir="in", y_dir="in"):
     )
 
 
-def load_colors(filename=DEFAULT_COLORMAP):
-    """
-    Load rgba colors from a json file
+def load_colors(filename: str = DEFAULT_COLORMAP):
+    """Load rgba colors from a json file
 
-    Parameters
-    ----------
-    filename : str
+    Args:
+        filename : JSON filename of user defined colormaps (defaults to the in-build colormaps of the package)
     """
     with open(filename) as f:
         inputcolors = json.load(f)
@@ -78,27 +65,33 @@ def load_colors(filename=DEFAULT_COLORMAP):
         return inputcolors
 
 
-def _scramble_pop(d):
-    """
-    Reorder the colors as [first, last, second, second but last, ...]
+def _scramble_pop(dq: collections.deque) -> Generator:
+    """Reorder the colors as [first, last, second, second but last, ...]
+    Args:
+        dq : A double ended queue of colors
     """
     try:
         while True:
-            yield d.popleft()
-            yield d.pop()
+            yield dq.popleft()
+            yield dq.pop()
     except IndexError:
         pass
 
 
-def get_cmap(name=None, colormap_filename=DEFAULT_COLORMAP):
-    """
-    Return the selected LinearSegmentedColormap or a dictionary of all colormaps registered in colormap_filename
+def get_cmap(
+    name: Optional[str] = None, colormap_filename: str = DEFAULT_COLORMAP
+) -> dict[
+    str,
+    tuple[mpl.colors.ListedColormap, mpl.colors.LinearSegmentedColormap, str],
+]:
+    """Return the selected LinearSegmentedColormap or a dictionary of all colormaps registered in colormap_filename
 
-    Parameters
-    ----------
-    name : str
-    colormap_filename : str
-                        path to a json file encoding a dictionary of colors which define custom colormaps
+    Args:
+        name : Name of the colormap
+        colormap_filename : Path to a JSON file encoding a dictionary of colors which define custom colormaps
+
+    Returns:
+        A dictionary of colormap names and the corresponding listed and linear segmented colormaps
     """
     default_inputcolors = load_colors(colormap_filename)
     default_cmaps = {
@@ -117,43 +110,56 @@ def get_cmap(name=None, colormap_filename=DEFAULT_COLORMAP):
             return None
 
 
-def naturalcolors():
+def naturalcolors() -> (
+    tuple[mpl.colors.ListedColormap, mpl.colors.LinearSegmentedColormap, str]
+):
     """
     Wrapper for naturalcolors map
+
+    Returns:
+        A listed and linear segmented colormaps
     """
     default_cmaps = get_cmap()
     return default_cmaps["naturalcolors"]
 
 
-def list_cmaps():
-    """
-    List all available colormaps
+def list_cmaps() -> list[str]:
+    """List all available colormaps
+
+    Returns:
+        A list of colormap names
     """
     return list(get_cmap().keys())
 
 
-def make_colormap(colors, name="newcolormap"):
-    """
-    Build a listed and a linear segmented colormap from a list of colors
+def make_colormap(
+    colors: np.ndarray, name: str = "newcolormap"
+) -> tuple[mpl.colors.ListedColormap, mpl.colors.LinearSegmentedColormap, str]:
+    """Build a listed and a linear segmented colormap from a list of colors
 
-    Parameters
-    ----------
-    colors : array_like
-    name : str
+    Args:
+        colors : A numpy array of RGB colors
+        name : The name of the new colormap
+
+    Returns:
+        A matplotlib LinearSegmented or Listed colormap
     """
     listedCmap = mpl.colors.ListedColormap(colors, name=name + "_list")
     linearSegmentedCmap = _listed2linearSegmentedColormap(listedCmap, name)
     return listedCmap, linearSegmentedCmap
 
 
-def _listed2linearSegmentedColormap(listedCmap, name="newcolormap"):
-    """
-    Convert a listed to a linear segmented colormap
+def _listed2linearSegmentedColormap(
+    listedCmap: mpl.colors.ListedColormap, name="newcolormap"
+) -> mpl.colors.ListedColormap:
+    """Convert a listed to a linear segmented colormap
 
-    Parameters
-    ----------
-    listedCmap : listed_colormap
-    name : str
+    Args:
+        listedCmap : A matplotlib ListedColormap
+        name : str
+
+    Returns:
+        A matplotlib LinearSegmented colormap
     """
     c = np.array(listedCmap.colors)
     x = np.linspace(0, 1, len(c))
@@ -165,16 +171,20 @@ def _listed2linearSegmentedColormap(listedCmap, name="newcolormap"):
     return mpl.colors.LinearSegmentedColormap(name=name, segmentdata=cdict, N=256)
 
 
-def get_colors(cmap, n, scramble=False):
-    """
-    Extract n colors from a colormap
+def get_colors(
+    cmap: Union[mpl.colors.ListedColormap, mpl.colors.LinearSegmentedColormap, str],
+    n: int,
+    scramble: bool = False,
+) -> np.ndarray:
+    """Extract n colors from a colormap
 
-    Parameters
-    ----------
-    cmap : colormap or str
-           listed / linear segmented colormap or the name of a registered colormap
-    n : int
-        number of colors to extract from the colormap
+    Args:
+        cmap : A Listed colormap, a linear segmented colormap or the name of a registered colormap
+        n : Number of colors to extract from the colormap
+        scramble: Whether to scramble the color
+
+    Returns:
+        A numpy array of colors
     """
     if type(cmap) is str:
         name = cmap
@@ -194,18 +204,20 @@ def get_colors(cmap, n, scramble=False):
     return colors
 
 
-def drawColorCircle(cmap, n=24, area=200):
-    """
-    Draw a color circle from the colormap
+def drawColorCircle(
+    cmap: Union[mpl.colors.ListedColormap, mpl.colors.LinearSegmentedColormap, str],
+    n: int = 24,
+    area: int = 200,
+) -> mpl.axes.Axes:
+    """Draw a color circle from the colormap
 
-    Parameters
-    ----------
-    cmap : colormap or str
-           listed / linear segmented colormap or the name of a registered colormap
-    n : int
-        number of colors to display in the color circle (set n=256 for a continuous circle)
-    area : int
-           size of the circles to draw
+    Args:
+        cmap : A Listed colormap, a linear segmented colormap or the name of a registered colormap
+        n : Number of colors to display in the color circle (set n=256 for a continuous circle)
+        area : Size of the circles to draw
+
+    Returns:
+        A matplotlib Axes object
     """
     if type(cmap) is str:
         name = cmap
@@ -226,16 +238,19 @@ def drawColorCircle(cmap, n=24, area=200):
         ax.axis("off")
         ax.grid(which="major", visible=False)
         ax.text(0, 0, name, va="center", ha="center", fontsize=12)
+        return ax
 
 
-def drawColorBar(cmap):
-    """
-    Draw a colorbar from the colormap
+def drawColorBar(
+    cmap: Union[mpl.colors.ListedColormap, mpl.colors.LinearSegmentedColormap, str],
+) -> mpl.figure.Figure:
+    """Draw a colorbar from the colormap
 
-    Parameters
-    ----------
-    cmap : colormap or str
-           listed / linear segmented colormap or the name of a registered colormap
+    Args:
+        cmap : A Listed colormap, a linear segmented colormap or the name of a registered colormap
+
+    Returns:
+        A matplotlib Figure object
     """
     if type(cmap) is str:
         name = cmap
@@ -252,3 +267,4 @@ def drawColorBar(cmap):
         x_text = pos[0] - 0.01
         y_text = pos[1] + pos[3] / 2.0
         fig.text(x_text, y_text, name, va="center", ha="right", fontsize=12)
+    return fig

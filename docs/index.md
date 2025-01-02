@@ -1,7 +1,6 @@
-# Welcome to naturalcolors
+# <img src="https://raw.githubusercontent.com/fdsteffen/naturalcolors/master/docs/images/icon.png" width="50">   naturalcolors
 
 **naturalcolors** generates custom colormaps from a list of RGB(A) colors.
-
 
 ## Installation
 There are different options how to install naturalcolors. 

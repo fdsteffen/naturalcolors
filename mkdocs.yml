@@ -1,0 +1,30 @@
+site_name: naturalcolors
+site_url: https://fdsteffen.github.io/naturalcolors
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.instant
+    - navigation.indexes
+  icon:
+    logo: material/format-color-fill
+  favicon: images/icon.png
+nav:
+    - Home: index.md
+    - Tutorial: naturalcolors_tutorial.ipynb
+    - API: api.md
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+plugins:
+  - search
+  - mkdocs-jupyter
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_signature_annotations: true
+            separate_signature: true
+repo_url: https://github.com/fdsteffen/naturalcolors  

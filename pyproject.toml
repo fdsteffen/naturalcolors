@@ -16,7 +16,11 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["devtools",
        "pytest",
-       "bumpver"
+       "bumpver",
+       "mkdocs",
+       "mkdocs-material",
+       "mkdocs-jupyter",
+       "mkdocstrings-python"
       ]
 
 
