@@ -1,1 +1,0 @@
-from naturalcolors.colorpalette import *

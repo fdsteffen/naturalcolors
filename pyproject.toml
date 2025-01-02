@@ -1,0 +1,49 @@
+[project]
+authors = [{name = "Fabio D. Steffen", email = "35061965+fdsteffen@users.noreply.github.com"}]
+description = "Create custom colormaps from discrete lists of colors"
+name = "naturalcolors"
+version = "1.0.2"
+license = { text = "MIT" }
+
+requires-python = ">= 3.8"
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "seaborn"
+]
+
+# Dev dependencies (e.g. for `pip install -e ".[dev]"`)
+[project.optional-dependencies]
+dev = ["devtools",
+       "pytest",
+       "bumpver"
+      ]
+
+
+[project.urls]
+Repository = "https://github.com/fdsteffen/naturalcolors.git"
+Issues = "https://github.com/fdsteffen/naturalcolors/iisues"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["naturalcolors"]
+
+[tool.setuptools.package-data]
+naturalcolors = ["colormaps.json"]
+
+[tool.bumpver]
+current_version = "1.0.2"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = true
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'version = "{version}"$',
+]
