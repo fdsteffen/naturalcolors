@@ -3,7 +3,7 @@
 """Make a custom colormap from a list of colors
 
 References:
-    [1] https://matplotlib.org/3.1.0/tutorials/colors/colormap-manipulation.html
+    [1] https://matplotlib.org/stable/users/explain/colors/colormap-manipulation.html
 """
 import numpy as np
 import matplotlib as mpl

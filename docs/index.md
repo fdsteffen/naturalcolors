@@ -18,4 +18,4 @@ pip install git+https://github.com/fdsteffen/naturalcolors.git
 ```
 
 ## Getting started
-A guide to create your own colormap can be found in this [Jupyter Notebook](naturalcolors_tutorial.ipynb).
+A guide to create your own colormap can be found in this [Tutorial](naturalcolors_tutorial.ipynb).
