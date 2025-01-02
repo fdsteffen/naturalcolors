@@ -1,7 +1,5 @@
 # <img src="https://raw.githubusercontent.com/fdsteffen/naturalcolors/master/docs/images/icon.png" width="50">naturalcolors
 [![PyPI](https://img.shields.io/pypi/v/naturalcolors)](https://pypi.org/project/naturalcolors/)
-[![Anaconda-Server Badge](https://anaconda.org/fdsteffen/naturalcolors/badges/version.svg)](https://anaconda.org/fdsteffen/naturalcolors/badges/version.svg)
-
 
 **naturalcolors** generates custom colormaps from a list of RGB(A) colors.
 
