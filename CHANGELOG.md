@@ -3,6 +3,10 @@ All notable changes to this project are documented in this file.
 
 ### [Unreleased]
 
+### [1.0.5] 2025-01-02
+#### Added
+- Add mkdocs documentation
+
 ### [1.0.4] 2025-01-02
 #### Fixed
 - Update release workflow
