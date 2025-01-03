@@ -2,7 +2,7 @@
 authors = [{name = "Fabio D. Steffen", email = "35061965+fdsteffen@users.noreply.github.com"}]
 description = "Create custom colormaps from discrete lists of colors"
 name = "naturalcolors"
-version = "1.0.4"
+version = "1.0.5"
 license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">= 3.8"
@@ -41,7 +41,7 @@ include = ["naturalcolors"]
 naturalcolors = ["colormaps.json"]
 
 [tool.bumpver]
-current_version = "1.0.4"
+current_version = "1.0.5"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "bump version {old_version} -> {new_version}"
 commit = true
