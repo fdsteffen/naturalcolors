@@ -25,6 +25,7 @@ dev = ["devtools",
 
 
 [project.urls]
+Documentation = "https://fdsteffen.github.io/naturalcolors/"
 Repository = "https://github.com/fdsteffen/naturalcolors.git"
 Issues = "https://github.com/fdsteffen/naturalcolors/iisues"
 
